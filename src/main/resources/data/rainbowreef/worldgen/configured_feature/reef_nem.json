@@ -1,4 +1,6 @@
 {
-  "type": "rainbowreef:reef_nem",
-  "config": {}
+  "type": "rainbowreef:anemone",
+  "config": {
+    "blocks": "#rainbowreef:tropical_nems"
+  }
 }

@@ -23,8 +23,8 @@
   "item.rainbowreef.arrow_crab_bucket" : "Bucket of Arrow Crab",
   "item.rainbowreef.eel_bucket" : "Bucket of Eel",
 
-  "item.rainbowreef.claw_disc" : "Music Disc",
-  "item.rainbowreef.claw_disc.desc" : "TheValiantSquidward - Claw",
+  "item.rainbowreef.music_disc_claw" : "Music Disc",
+  "item.rainbowreef.music_disc_claw.desc" : "TheValiantSquidward - Claw",
 
   "item.rainbowreef.raw_goby" : "Raw Goby",
   "item.rainbowreef.raw_ray" : "Raw Ray",

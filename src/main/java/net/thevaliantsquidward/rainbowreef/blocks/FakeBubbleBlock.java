@@ -9,12 +9,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BucketPickup;
@@ -28,25 +27,24 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.thevaliantsquidward.rainbowreef.registry.ReefBlocks;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
 public class FakeBubbleBlock extends Block implements BucketPickup {
+    public FakeBubbleBlock(BlockBehaviour.Properties properties) {
+        super(properties);
+    }
 
-    private static final int CHECK_PERIOD = 5;
-
-    public FakeBubbleBlock(BlockBehaviour.Properties pProperties) {
-        super(pProperties); }
-
-    public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
+    public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity, InsideBlockEffectApplier applier) {
         BlockState blockstate = pLevel.getBlockState(pPos.above());
         if (blockstate.isAir()) {
             if (!pLevel.isClientSide) {
                 ServerLevel serverlevel = (ServerLevel)pLevel;
 
                 for(int i = 0; i < 2; ++i) {
-                    serverlevel.sendParticles(ParticleTypes.SPLASH, (double)pPos.getX() + pLevel.random.nextDouble(), (double)(pPos.getY() + 1), (double)pPos.getZ() + pLevel.random.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
-                    serverlevel.sendParticles(ParticleTypes.BUBBLE, (double)pPos.getX() + pLevel.random.nextDouble(), (double)(pPos.getY() + 1), (double)pPos.getZ() + pLevel.random.nextDouble(), 1, 0.0D, 0.01D, 0.0D, 0.2D);
+                    serverlevel.sendParticles(ParticleTypes.SPLASH, pPos.getX() + pLevel.random.nextDouble(), (pPos.getY() + 1), pPos.getZ() + pLevel.random.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
+                    serverlevel.sendParticles(ParticleTypes.BUBBLE, pPos.getX() + pLevel.random.nextDouble(), (pPos.getY() + 1), pPos.getZ() + pLevel.random.nextDouble(), 1, 0.0D, 0.01D, 0.0D, 0.2D);
                 }
             }
         }
@@ -82,14 +80,14 @@ public class FakeBubbleBlock extends Block implements BucketPickup {
     }
 
     private static boolean canExistIn(BlockState pBlockState) {
-        return pBlockState.is(ReefBlocks.FAKE_BUBBLES.get()) || pBlockState.is(Blocks.WATER) && pBlockState.getFluidState().getAmount() >= 8 && pBlockState.getFluidState().isSource();
+        return pBlockState.is(ReefBlocks.FAKE_BUBBLES) || pBlockState.is(Blocks.WATER) && pBlockState.getFluidState().getAmount() >= 8 && pBlockState.getFluidState().isSource();
     }
 
     private static BlockState getColumnState(BlockState pBlockState) {
-        if (pBlockState.is(ReefBlocks.FAKE_BUBBLES.get())) {
+        if (pBlockState.is(ReefBlocks.FAKE_BUBBLES)) {
             return pBlockState;
         } else {
-            return pBlockState.is(ReefBlocks.BUBBLER.get()) ? ReefBlocks.FAKE_BUBBLES.get().defaultBlockState() : Blocks.WATER.defaultBlockState();
+            return pBlockState.is(ReefBlocks.BUBBLER) ? ReefBlocks.FAKE_BUBBLES.defaultBlockState() : Blocks.WATER.defaultBlockState();
         }
     }
 
@@ -106,19 +104,19 @@ public class FakeBubbleBlock extends Block implements BucketPickup {
             }
     }
 
-
-    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
-        pLevel.scheduleTick(pCurrentPos, Fluids.WATER, Fluids.WATER.getTickDelay(pLevel));
-        if (!pState.canSurvive(pLevel, pCurrentPos) || pFacing == Direction.DOWN || pFacing == Direction.UP && !pFacingState.is(ReefBlocks.FAKE_BUBBLES.get()) && canExistIn(pFacingState)) {
-            pLevel.scheduleTick(pCurrentPos, this, 5);
+    @Override
+    public BlockState updateShape(BlockState state, LevelReader reader, ScheduledTickAccess tickAccess, BlockPos pos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
+        tickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(reader));
+        if (!state.canSurvive(reader, pos) || facing == Direction.DOWN || facing == Direction.UP && !facingState.is(ReefBlocks.FAKE_BUBBLES) && canExistIn(facingState)) {
+            tickAccess.scheduleTick(pos, this, 5);
         }
 
-        return super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
+        return super.updateShape(state, reader, tickAccess, pos, facing, facingPos, facingState, random);
     }
 
     public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
         BlockState blockstate = pLevel.getBlockState(pPos.below());
-        return blockstate.is(ReefBlocks.FAKE_BUBBLES.get()) || blockstate.is(ReefBlocks.BUBBLER.get());
+        return blockstate.is(ReefBlocks.FAKE_BUBBLES) || blockstate.is(ReefBlocks.BUBBLER);
     }
 
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
@@ -134,8 +132,9 @@ public class FakeBubbleBlock extends Block implements BucketPickup {
         pBuilder.add();
     }
 
-    public ItemStack pickupBlock(LevelAccessor pLevel, BlockPos pPos, BlockState pState) {
-        pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 11);
+    @Override
+    public ItemStack pickupBlock(@Nullable LivingEntity entity, LevelAccessor levelAccessor, BlockPos pos, BlockState state) {
+        levelAccessor.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
         return new ItemStack(Items.WATER_BUCKET);
     }
 

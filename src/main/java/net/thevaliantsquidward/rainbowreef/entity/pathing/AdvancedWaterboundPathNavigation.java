@@ -42,7 +42,7 @@ public class AdvancedWaterboundPathNavigation extends PathNavigation {
      * If on ground or swimming and can swim
      */
     protected boolean canUpdatePath() {
-        return this.allowBreaching || this.isInLiquid();
+        return this.allowBreaching || this.mob.isInLiquid();
     }
 
     protected Vec3 getTempMobPos() {
@@ -60,10 +60,15 @@ public class AdvancedWaterboundPathNavigation extends PathNavigation {
         return isClearForMovementBetween(this.mob, pPosVec31, pPosVec32, false);
     }
 
-    public boolean isStableDestination(BlockPos pPos) {
-        return !this.level.getBlockState(pPos).isSolidRender(this.level, pPos);
+    public boolean isStableDestination(BlockPos pos) {
+        return !this.level.getBlockState(pos).isSolidRender();
     }
 
-    public void setCanFloat(boolean pCanSwim) {
+    public void setCanFloat(boolean canFloat) {
+    }
+
+    @Override
+    public boolean canNavigateGround() {
+        return false;
     }
 }

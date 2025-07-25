@@ -20,7 +20,7 @@ import java.util.Map;
 public class AdvancedSwimNodeEvaluator extends NodeEvaluator {
     private boolean allowBreaching;
     private boolean preferCrevices;
-    private final Long2ObjectMap<BlockPathTypes> pathTypesByPosCache = new Long2ObjectOpenHashMap<>();
+    private final Long2ObjectMap<PathType> pathTypesByPosCache = new Long2ObjectOpenHashMap<>();
 
     public AdvancedSwimNodeEvaluator(boolean pAllowBreaching, boolean pPreferCrevices) {
         this.allowBreaching = pAllowBreaching;
@@ -44,27 +44,27 @@ public class AdvancedSwimNodeEvaluator extends NodeEvaluator {
         return this.getNode(Mth.floor(this.mob.getBoundingBox().minX), Mth.floor(this.mob.getBoundingBox().minY + 0.5D), Mth.floor(this.mob.getBoundingBox().minZ));
     }
 
-    public Target getGoal(double pX, double pY, double pZ) {
-        return this.getTargetFromNode(this.getNode(Mth.floor(pX), Mth.floor(pY), Mth.floor(pZ)));
+    public Target getTarget(double pX, double pY, double pZ) {
+        return this.getTargetNodeAt(pX, pY, pZ);
     }
 
-    public int getNeighbors(Node[] pOutputArray, Node pNode) {
+    public int getNeighbors(Node[] output, Node baseNode) {
         int i = 0;
         Map<Direction, Node> map = Maps.newEnumMap(Direction.class);
 
         for(Direction direction : Direction.values()) {
-            Node node = this.findAcceptedNode(pNode.x + direction.getStepX(), pNode.y + direction.getStepY(), pNode.z + direction.getStepZ());
+            Node node = this.findAcceptedNode(baseNode.x + direction.getStepX(), baseNode.y + direction.getStepY(), baseNode.z + direction.getStepZ());
             map.put(direction, node);
             if (this.isNodeValid(node)) {
-                pOutputArray[i++] = node;
+                output[i++] = node;
             }
         }
 
         for(Direction direction1 : Direction.Plane.HORIZONTAL) {
             Direction direction2 = direction1.getClockWise();
-            Node node1 = this.findAcceptedNode(pNode.x + direction1.getStepX() + direction2.getStepX(), pNode.y, pNode.z + direction1.getStepZ() + direction2.getStepZ());
+            Node node1 = this.findAcceptedNode(baseNode.x + direction1.getStepX() + direction2.getStepX(), baseNode.y, baseNode.z + direction1.getStepZ() + direction2.getStepZ());
             if (this.isDiagonalNodeValid(node1, map.get(direction1), map.get(direction2))) {
-                pOutputArray[i++] = node1;
+                output[i++] = node1;
             }
         }
 
@@ -86,16 +86,16 @@ public class AdvancedSwimNodeEvaluator extends NodeEvaluator {
     @Nullable
     protected Node findAcceptedNode(int pX, int pY, int pZ) {
         Node node = null;
-        BlockPathTypes blockpathtypes = this.getCachedBlockType(pX, pY, pZ);
+        PathType type = this.getCachedBlockType(pX, pY, pZ);
 
 
-        if (this.allowBreaching && blockpathtypes == BlockPathTypes.BREACH || blockpathtypes == BlockPathTypes.WATER) {
-            float f = this.mob.getPathfindingMalus(blockpathtypes);
+        if (this.allowBreaching && type == PathType.BREACH || type == PathType.WATER) {
+            float f = this.mob.getPathfindingMalus(type);
 
 
             if (f >= 0.0F) {
                 node = this.getNode(pX, pY, pZ);
-                node.type = blockpathtypes;
+                node.type = type;
                 node.costMalus = Math.max(node.costMalus, f);
 
                 if (preferCrevices) {
@@ -103,7 +103,7 @@ public class AdvancedSwimNodeEvaluator extends NodeEvaluator {
                     node.costMalus += countOpenSides(pX, pY, pZ);
                 }
 
-                if (this.level.getFluidState(new BlockPos(pX, pY, pZ)).isEmpty()) {
+                if (this.currentContext.level().getFluidState(new BlockPos(pX, pY, pZ)).isEmpty()) {
                     node.costMalus += 8.0F;
                 }
 
@@ -115,69 +115,67 @@ public class AdvancedSwimNodeEvaluator extends NodeEvaluator {
         return node;
     }
 
-    protected BlockPathTypes getCachedBlockType(int pX, int pY, int pZ) {
+    protected PathType getCachedBlockType(int pX, int pY, int pZ) {
         return this.pathTypesByPosCache.computeIfAbsent(BlockPos.asLong(pX, pY, pZ), (p_192957_) -> {
-            return this.getBlockPathType(this.level, pX, pY, pZ);
+            return this.getPathType(this.currentContext, pX, pY, pZ);
         });
     }
 
     /**
      * Returns the node type at the specified postion taking the block below into account
      */
-    public BlockPathTypes getBlockPathType(BlockGetter pLevel, int pX, int pY, int pZ) {
-        return this.getBlockPathType(pLevel, pX, pY, pZ, this.mob);
+    public PathType getPathType(PathfindingContext context, int x, int y, int z) {
+        return this.getPathTypeOfMob(context, x, y, z, this.mob);
     }
 
-    public BlockPathTypes getBlockPathType(BlockGetter pLevel, int pX, int pY, int pZ, Mob pMob) {
-        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+    public PathType getPathTypeOfMob(PathfindingContext $$0, int $$1, int $$2, int $$3, Mob $$4) {
+        BlockPos.MutableBlockPos $$5 = new BlockPos.MutableBlockPos();
 
-        for(int i = pX; i < pX + this.entityWidth; ++i) {
-            for(int j = pY; j < pY + this.entityHeight; ++j) {
-                for(int k = pZ; k < pZ + this.entityDepth; ++k) {
-                    FluidState fluidstate = pLevel.getFluidState(blockpos$mutableblockpos.set(i, j, k));
-                    BlockState blockstate = pLevel.getBlockState(blockpos$mutableblockpos.set(i, j, k));
-                    if (fluidstate.isEmpty() && blockstate.isPathfindable(pLevel, blockpos$mutableblockpos.below(), PathComputationType.WATER) && blockstate.isAir()) {
-                        return BlockPathTypes.BREACH;
+        for(int $$6 = $$1; $$6 < $$1 + this.entityWidth; ++$$6) {
+            for(int $$7 = $$2; $$7 < $$2 + this.entityHeight; ++$$7) {
+                for(int $$8 = $$3; $$8 < $$3 + this.entityDepth; ++$$8) {
+                    BlockState $$9 = $$0.getBlockState($$5.set($$6, $$7, $$8));
+                    FluidState $$10 = $$9.getFluidState();
+                    if ($$10.isEmpty() && $$9.isPathfindable(PathComputationType.WATER) && $$9.isAir()) {
+                        return PathType.BREACH;
                     }
 
-                    if (!fluidstate.is(FluidTags.WATER)) {
-                        return BlockPathTypes.BLOCKED;
+                    if (!$$10.is(FluidTags.WATER)) {
+                        return PathType.BLOCKED;
                     }
                 }
             }
         }
 
-        BlockState blockstate1 = pLevel.getBlockState(blockpos$mutableblockpos);
-        return blockstate1.isPathfindable(pLevel, blockpos$mutableblockpos, PathComputationType.WATER) ? BlockPathTypes.WATER : BlockPathTypes.BLOCKED;
+        BlockState $$11 = $$0.getBlockState($$5);
+        if ($$11.isPathfindable(PathComputationType.WATER)) {
+            return PathType.WATER;
+        } else {
+            return PathType.BLOCKED;
+        }
     }
 
     public float countOpenSides(int x, int y, int z) {
         BlockPos nodepos = new BlockPos(x, y, z);
         float end = 2;
 
-        if (!this.level.getBlockState(nodepos.above()).isSolid()) {
+        if (!this.currentContext.level().getBlockState(nodepos.above()).isSolid()) {
             end *= end;
-            //System.out.println("above");
         }
-        if (!this.level.getBlockState(nodepos.below()).isSolid()) {
+        if (!this.currentContext.level().getBlockState(nodepos.below()).isSolid()) {
             end *= end;
-            //System.out.println("below");
         }
-        if (!this.level.getBlockState(nodepos.east()).isSolid()) {
+        if (!this.currentContext.level().getBlockState(nodepos.east()).isSolid()) {
             end *= end;
-            //System.out.println("east");
         }
-        if (!this.level.getBlockState(nodepos.west()).isSolid()) {
+        if (!this.currentContext.level().getBlockState(nodepos.west()).isSolid()) {
             end *= end;
-            //System.out.println("west");
         }
-        if (!this.level.getBlockState(nodepos.north()).isSolid()) {
+        if (!this.currentContext.level().getBlockState(nodepos.north()).isSolid()) {
             end *= end;
-            //System.out.println("north");
         }
-        if (!this.level.getBlockState(nodepos.south()).isSolid()) {
+        if (!this.currentContext.level().getBlockState(nodepos.south()).isSolid()) {
             end *= end;
-            //System.out.println("south");
         }
 
         return end - 2;

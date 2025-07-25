@@ -1,304 +1,243 @@
 package net.thevaliantsquidward.rainbowreef.registry;
 
 
+import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
+import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.item.component.Consumables;
+import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import net.thevaliantsquidward.rainbowreef.RainbowReef;
+import net.thevaliantsquidward.rainbowreef.blocks.set.CoralBlockSet;
 import net.thevaliantsquidward.rainbowreef.items.*;
+import net.thevaliantsquidward.rainbowreef.util.ReefDamageTypes;
+import net.thevaliantsquidward.rainbowreef.util.ReefJukeboxSongs;
 
-public class ReefItems {
+import java.util.List;
+import java.util.function.Function;
 
-    public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, RainbowReef.MOD_ID);
+public interface ReefItems {
+    Consumable FAST_EATING = Consumable.builder().consumeSeconds(0.8f).build();
 
-    public static Item.Properties drinkItem() {
-        return new Item.Properties().craftRemainder(Items.GLASS_BOTTLE).stacksTo(16);
-    }
-
-    public static Item.Properties soupItem() {
-        return new Item.Properties().craftRemainder(Items.BOWL).stacksTo(8);
-    }
-
-    public static final RegistryObject<Item> GOBY_SPAWN_EGG = ITEMS.register("goby_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.GOBY, 0xffffff, 0xdb3f1f, new Item.Properties()));
-
-    public static final RegistryObject<Item> RAY_SPAWN_EGG = ITEMS.register("ray_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.RAY, 0x150a11, 0xd4d4e0, new Item.Properties()));
-
-    public static final RegistryObject<Item> PIPEFISH_SPAWN_EGG = ITEMS.register("pipefish_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.PIPEFISH, 0x7c7f16, 0x3c3112, new Item.Properties()));
-
-
-    public static final RegistryObject<Item> TANG_SPAWN_EGG = ITEMS.register("tang_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.TANG, 0x445bca, 0xefb032, new Item.Properties()));
-
-    public static final RegistryObject<Item> SEAHORSE_SPAWN_EGG = ITEMS.register("seahorse_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.SEAHORSE, 0xd6d126, 0x7a8e1e, new Item.Properties()));
-
-    public static final RegistryObject<Item> BOXFISH_SPAWN_EGG = ITEMS.register("boxfish_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.BOXFISH, 0xfeda47, 0x62260a, new Item.Properties()));
-
-    public static final RegistryObject<Item> PARROTFISH_SPAWN_EGG = ITEMS.register("parrotfish_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.PARROTFISH, 0x3998e7, 0x7351ff, new Item.Properties()));
-
-
-    public static final RegistryObject<Item> DWARF_ANGEL_SPAWN_EGG = ITEMS.register("dwarf_angelfish_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.DWARFANGEL, 0xfed638, 0x294cc7, new Item.Properties()));
-
-
-    public static final RegistryObject<Item> SMALL_SHARK_SPAWN_EGG = ITEMS.register("small_shark_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.SMALL_SHARK, 0xe0a33b, 0xa35a1d, new Item.Properties()));
-
-    public static final RegistryObject<Item> CLOWNFISH_SPAWN_EGG = ITEMS.register("clownfish_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.CLOWNFISH, 0xe55500, 0xe69d7d, new Item.Properties()));
-
-    public static final RegistryObject<Item> BASSLET_SPAWN_EGG = ITEMS.register("basslet_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.BASSLET, 0xcb28f9, 0xf9b628, new Item.Properties()));
-
-    public static final RegistryObject<Item> BUTTERFISH_SPAWN_EGG = ITEMS.register("butterflyfish_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.BUTTERFISH, 0xdb8f1a, 0xfffdf6, new Item.Properties()));
-
-    public static final RegistryObject<Item> HOGFISH_SPAWN_EGG = ITEMS.register("hogfish_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.HOGFISH, 0xca2418, 0xf3bc15, new Item.Properties()));
-
-    public static final RegistryObject<Item> ANGELFISH_SPAWN_EGG = ITEMS.register("angelfish_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.ANGELFISH, 0x2e4284, 0xcfc24b, new Item.Properties()));
-
-    public static final RegistryObject<Item> CRAB_SPAWN_EGG = ITEMS.register("crab_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.CRAB, 0x261f4e, 0xf78b21, new Item.Properties()));
-
-    public static final RegistryObject<Item> ARROW_CRAB_SPAWN_EGG = ITEMS.register("arrow_crab_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.ARROW_CRAB, 0x4b3827, 0xd94b19, new Item.Properties()));
-
-    public static final RegistryObject<Item> MOORISH_IDOL_SPAWN_EGG = ITEMS.register("moorish_idol_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.MOORISH_IDOL, 0x322b2f, 0xf2c447, new Item.Properties()));
-
-    public static final RegistryObject<Item> JELLYFISH_SPAWN_EGG = ITEMS.register("jellyfish_spawn_egg",
-            () -> new ForgeSpawnEggItem(ReefEntities.JELLYFISH, 0xf6b7dd, 0xef8298, new Item.Properties()));
-
-  //  public static final RegistryObject<Item> EEL_SPAWN_EGG = ITEMS.register("eel_spawn_egg",
-  //          () -> new ForgeSpawnEggItem(ReefEntities.EEL, 0x4f7523, 0xa6a926, new Item.Properties()));
-
-    public static final RegistryObject<Item> CLAW_DISC = ITEMS.register("claw_disc",
-            () -> new RecordItem(2, ReefSounds.CLAW, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 2240));
+    Item GOBY_SPAWN_EGG = spawnEgg("goby", ReefEntities.GOBY);
+    Item RAY_SPAWN_EGG = spawnEgg("ray", ReefEntities.RAY);
+    Item PIPEFISH_SPAWN_EGG = spawnEgg("pipefish", ReefEntities.PIPEFISH);
+    Item TANG_SPAWN_EGG = spawnEgg("tang", ReefEntities.TANG);
+    Item SEAHORSE_SPAWN_EGG = spawnEgg("seahorse", ReefEntities.SEAHORSE);
+    Item BOXFISH_SPAWN_EGG = spawnEgg("boxfish", ReefEntities.BOXFISH);
+    Item PARROTFISH_SPAWN_EGG = spawnEgg("parrotfish", ReefEntities.PARROTFISH);
+    Item DWARF_ANGEL_SPAWN_EGG = spawnEgg("dwarf_angel", ReefEntities.DWARF_ANGELFISH);
+    Item SMALL_SHARK_SPAWN_EGG = spawnEgg("small_shark", ReefEntities.SMALL_SHARK);
+    Item CLOWNFISH_SPAWN_EGG = spawnEgg("clownfish", ReefEntities.CLOWNFISH);
+    Item BASSLET_SPAWN_EGG = spawnEgg("basslet", ReefEntities.BASSLET);
+    Item BUTTERFISH_SPAWN_EGG = spawnEgg("butterfish", ReefEntities.BUTTERFISH);
+    Item HOGFISH_SPAWN_EGG = spawnEgg("hogfish", ReefEntities.HOGFISH);
+    Item ANGELFISH_SPAWN_EGG = spawnEgg("angelfish", ReefEntities.ANGELFISH);
+    Item CRAB_SPAWN_EGG = spawnEgg("crab", ReefEntities.CRAB);
+    Item ARROW_CRAB_SPAWN_EGG = spawnEgg("arrow_crab", ReefEntities.ARROW_CRAB);
+    Item MOORISH_IDOL_SPAWN_EGG = spawnEgg("moorish_idol", ReefEntities.MOORISH_IDOL);
+    Item JELLYFISH_SPAWN_EGG = spawnEgg("jellyfish", ReefEntities.JELLYFISH);
 
     // Buckets
-    public static final RegistryObject<Item> GOBY_BUCKET = ITEMS.register("goby_bucket", () -> new ItemModFishBucket(ReefEntities.GOBY, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> ANGELFISH_BUCKET = ITEMS.register("angelfish_bucket", () -> new ItemModFishBucket(ReefEntities.ANGELFISH, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> CRAB_BUCKET = ITEMS.register("crab_bucket", () -> new ItemModFishBucket(ReefEntities.CRAB, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> PIPEFISH_BUCKET = ITEMS.register("pipefish_bucket", () -> new ItemModFishBucket(ReefEntities.PIPEFISH, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> DWARF_ANGELFISH_BUCKET = ITEMS.register("dwarf_angelfish_bucket", () -> new ItemModFishBucket(ReefEntities.DWARFANGEL, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> TANG_BUCKET = ITEMS.register("tang_bucket", () -> new ItemModFishBucket(ReefEntities.TANG, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> BASSLET_BUCKET = ITEMS.register("basslet_bucket", () -> new ItemModFishBucket(ReefEntities.BASSLET, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> CLOWNFISH_BUCKET = ITEMS.register("clownfish_bucket", () -> new ItemModFishBucket(ReefEntities.CLOWNFISH, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> BOXFISH_BUCKET = ITEMS.register("boxfish_bucket", () -> new ItemModFishBucket(ReefEntities.BOXFISH, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> ARROW_CRAB_BUCKET = ITEMS.register("arrow_crab_bucket", () -> new ItemModFishBucket(ReefEntities.ARROW_CRAB, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> BUTTERFISH_BUCKET = ITEMS.register("butterflyfish_bucket", () -> new ItemModFishBucket(ReefEntities.BUTTERFISH, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> SHARK_BUCKET = ITEMS.register("smallshark_bucket", () -> new ItemModFishBucket(ReefEntities.SMALL_SHARK, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> SEAHORSE_BUCKET = ITEMS.register("seahorse_bucket", () -> new ItemModFishBucket(ReefEntities.SEAHORSE, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> HOGFISH_BUCKET = ITEMS.register("hogfish_bucket", () -> new ItemModFishBucket(ReefEntities.HOGFISH, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> JELLYFISH_BUCKET = ITEMS.register("jellyfish_bucket", () -> new ItemModFishBucket(ReefEntities.JELLYFISH, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> PARROTFISH_BUCKET = ITEMS.register("parrotfish_bucket", () -> new ItemModFishBucket(ReefEntities.PARROTFISH, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> MOORISH_IDOL_BUCKET = ITEMS.register("moorish_idol_bucket", () -> new ItemModFishBucket(ReefEntities.MOORISH_IDOL, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> SPOTTED_EAGLE_RAY_BUCKET = ITEMS.register("spotted_eagle_ray_bucket", () -> new ItemModFishBucket(ReefEntities.RAY, Fluids.WATER, new Item.Properties()));
-
-  //  public static final RegistryObject<Item> EEL_BUCKET = ITEMS.register("eel_bucket", () -> new ItemModFishBucket(ReefEntities.EEL, Fluids.WATER, new Item.Properties()));
-
+    Item GOBY_BUCKET = bucket("goby", ReefEntities.GOBY);
+    Item ANGELFISH_BUCKET = bucket("angelfish", ReefEntities.ANGELFISH);
+    Item CRAB_BUCKET = bucket("crab", ReefEntities.CRAB);
+    Item PIPEFISH_BUCKET = bucket("pipefish", ReefEntities.PIPEFISH);
+    Item DWARF_ANGELFISH_BUCKET = bucket("dwarf_angelfish", ReefEntities.DWARF_ANGELFISH);
+    Item TANG_BUCKET = bucket("tang", ReefEntities.TANG);
+    Item BASSLET_BUCKET = bucket("basslet", ReefEntities.BASSLET);
+    Item CLOWNFISH_BUCKET = bucket("clownfish", ReefEntities.CLOWNFISH);
+    Item BOXFISH_BUCKET = bucket("boxfish", ReefEntities.BOXFISH);
+    Item ARROW_CRAB_BUCKET = bucket("arrow_crab", ReefEntities.ARROW_CRAB);
+    Item BUTTERFISH_BUCKET = bucket("butterflyfish", ReefEntities.BUTTERFISH);
+    Item SHARK_BUCKET = bucket("smallshark", ReefEntities.SMALL_SHARK);
+    Item SEAHORSE_BUCKET = bucket("seahorse", ReefEntities.SEAHORSE);
+    Item HOGFISH_BUCKET = bucket("hogfish", ReefEntities.HOGFISH);
+    Item JELLYFISH_BUCKET = bucket("jellyfish", ReefEntities.JELLYFISH);
+    Item PARROTFISH_BUCKET = bucket("parrotfish", ReefEntities.PARROTFISH);
+    Item MOORISH_IDOL_BUCKET = bucket("moorish_idol", ReefEntities.MOORISH_IDOL);
+    Item SPOTTED_EAGLE_RAY_BUCKET = bucket("spotted_eagle_ray", ReefEntities.RAY);
 
     // Raw
-    public static final RegistryObject<Item> RAW_GOBY = ITEMS.register("raw_goby", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_RAY = ITEMS.register("raw_ray", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.8F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_SMALL_SHARK = ITEMS.register("raw_small_shark", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.8F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_ANGELFISH = ITEMS.register("raw_angelfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_MOORISH_IDOL = ITEMS.register("raw_moorish_idol", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_CRAB_MEAT = ITEMS.register("crab_meat", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_ARROW_CRAB = ITEMS.register("arrow_crab", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_TANG = ITEMS.register("raw_tang", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_HOGFISH = ITEMS.register("raw_hogfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_BOXFISH = ITEMS.register("raw_boxfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(0.4F).meat().effect(new MobEffectInstance(MobEffects.WITHER, 140, 2), 1F).build())));
-
-    public static final RegistryObject<Item> RAW_CLOWNFISH = ITEMS.register("raw_clownfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_BUTTERFISH = ITEMS.register("raw_butterflyfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_SEAHORSE = ITEMS.register("raw_seahorse", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_BASSLET = ITEMS.register("raw_basslet", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_PIPEFISH = ITEMS.register("raw_pipefish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_PARROTFISH = ITEMS.register("raw_parrotfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.8F).meat().build())));
-
-    public static final RegistryObject<Item> RAW_DWARF_ANGELFISH = ITEMS.register("raw_dwarf_angelfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().build())));
-
-  //  public static final RegistryObject<Item> RAW_EEL = ITEMS.register("raw_eel", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).meat().build())));
-
-    public static final RegistryObject<Item> GLOB_OF_JELLY = ITEMS.register("glob_of_jelly", () -> new Item(new Item.Properties()));
-
-
+    Item RAW_GOBY = rawFood("goby");
+    Item RAW_RAY = rawHeartyFood("raw_ray");
+    Item RAW_SMALL_SHARK = rawHeartyFood("small_shark");
+    Item RAW_ANGELFISH = rawFood("angelfish");
+    Item RAW_MOORISH_IDOL = rawFood("moorish_idol");
+    Item RAW_CRAB_MEAT = rawFood("crab_meat");
+    Item RAW_ARROW_CRAB = rawFood("arrow_crab");
+    Item RAW_TANG = rawFood("raw_tang");
+    Item RAW_HOGFISH = rawFood("raw_hogfish");
+    Item RAW_BOXFISH = register("raw_boxfish", properties -> new Item(properties.food(
+        new FoodProperties.Builder().alwaysEdible().nutrition(1).saturationModifier(0.4F).build(),
+        Consumable.builder().onConsume(new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(MobEffects.WITHER, 140, 2))).onConsume(new KillConsumeEffect(ReefDamageTypes.ATE_BOXFISH, 0.01f)).build()
+    )));
+    Item RAW_CLOWNFISH = rawFood("raw_clownfish");
+    Item RAW_BUTTERFISH = rawFood("raw_butterflyfish");
+    Item RAW_SEAHORSE = rawFood("raw_seahorse");
+    Item RAW_BASSLET = rawFood("raw_basslet");
+    Item RAW_PIPEFISH = rawFood("raw_pipefish");
+    Item RAW_PARROTFISH = rawHeartyFood("raw_parrotfish");
+    Item RAW_DWARF_ANGELFISH = rawFood("raw_dwarf_angelfish");
 
     // Meals
-    public static final RegistryObject<Item> BASSLET_COOKIE = ITEMS.register("basslet_cookie", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build())));
-
-    public static final RegistryObject<Item> BOXFISH_BREAD = ITEMS.register("boxfish_bread", () -> new BoxfishBreadItem(new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationMod(0.4F).build())));
-
-    public static final RegistryObject<Item> BUTTERED_BUTTERFLYFISH_TOAST = ITEMS.register("buttered_butterflyfish", () -> new Item(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().nutrition(8).saturationMod(0F).build())));
-
-    public static final RegistryObject<Item> CRAB_CAKE = ITEMS.register("crabcake", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationMod(0.5F).meat().build())));
-
-    public static final RegistryObject<Item> CLOWNFISH_CUPCAKE = ITEMS.register("clownfish_cupcake", () -> new Item(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(1F).build())));
-
-    public static final RegistryObject<Item> CHOCO_RAY_MUFFIN = ITEMS.register("choco_ray_muffin", () -> new Item(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().alwaysEat().nutrition(7).saturationMod(0.3F).build())));
-
-    public static final RegistryObject<Item> COOKED_HOGFISH_BACON = ITEMS.register("cooked_hogfish_bacon", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.4F).build())));
-
-    public static final RegistryObject<Item> DRIED_SEAHORSE = ITEMS.register("dried_seahorse", () -> new CleansingSnackItem(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4F).meat().fast().alwaysEat().build())));
-
-    public static final RegistryObject<Item> DWARF_ANGELFISH_TARTS = ITEMS.register("dwarf_angelfish_tarts", () -> new Item(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().nutrition(1).saturationMod(0.5F).build())));
-
-    public static final RegistryObject<Item> GOBY_GUMMY = ITEMS.register("goby_gummy", () -> new Item(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().nutrition(2).saturationMod(0.5F).fast().build())));
-
-    public static final RegistryObject<Item> JELLY_TART = ITEMS.register("jelly_tart", () -> new Item(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().alwaysEat().nutrition(4).saturationMod(0.5F).build())));
-
-    public static final RegistryObject<Item> JELLY_SANDWICH = ITEMS.register("jelly_sandwich", () -> new Item(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().alwaysEat().nutrition(8).saturationMod(0.5F).build())));
-
-    public static final RegistryObject<Item> JELLYFISH_JELLY = ITEMS.register("jellyfish_jelly", () -> new JellyBottleItem(new Item.Properties().stacksTo(16).craftRemainder(Items.GLASS_BOTTLE).food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).alwaysEat().build())));
-
-    public static final RegistryObject<Item> HOGFISH_BACON = ITEMS.register("hogfish_bacon", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.5F).build())));
-
-    public static final RegistryObject<Item> IDOL_COOKIE = ITEMS.register("idol_cookie", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build())));
-
-    public static final RegistryObject<Item> PARROTFISH_PUNCH = ITEMS.register("parrotfish_punch", () -> new ParrotfishPunchItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(5).saturationMod(1.2F).alwaysEat().effect(new MobEffectInstance(MobEffects.ABSORPTION, 300, 1), 1F).effect(new MobEffectInstance(MobEffects.REGENERATION, 300, 0), 1F).build())));
-
-    public static final RegistryObject<Item> PIPEFISH_SUSHI = ITEMS.register("pipefish_sushi", () -> new Item(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().nutrition(0).saturationMod(0F).alwaysEat().effect(new MobEffectInstance(MobEffects.HEAL, 1, 1), 1F).build())));
-
-    public static final RegistryObject<Item> ROASTED_CRAB_MEAT = ITEMS.register("roasted_crab_meat", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.6F).meat().build())));
-
-    public static final RegistryObject<Item> SHARKBITE_SALAD = ITEMS.register("sharkbite_salad", () -> new BowlFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(5).saturationMod(0.8F).build())));
-
-    public static final RegistryObject<Item> TANGY_SOUP = ITEMS.register("tangy_soup", () -> new BowlFoodItem(new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE).food(new FoodProperties.Builder().nutrition(12).saturationMod(0.8F).effect(new MobEffectInstance(MobEffects.GLOWING, 600, 1), 1.0F).build())));
-
-    public static final RegistryObject<Item> ULTRA_BACON_SANDWICH = ITEMS.register("bacon_sandwich", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(14).saturationMod(0.7F).effect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 300, 0), 1.0F).build())));
-
-   // public static final RegistryObject<Item> EELINI_SPAGHETTI = ITEMS.register("eelini_spaghetti", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationMod(1.0F).effect(new MobEffectInstance(MobEffects.DIG_SPEED, 2400, 1), 1.0F).build())));
-
+    Item BASSLET_COOKIE = food("basslet_cookie", 2, 0.1F, false);
+    Item BOXFISH_BREAD = food("boxfish_bread", 8, 0.4F, false);
+    Item BUTTERED_BUTTERFLYFISH_TOAST = register("buttered_butterflyfish", properties -> new Item(properties.craftRemainder(Items.BUCKET).food(food(8, 0F, false))));
+    Item CRAB_CAKE = food("crabcake", 8, 0.5F, false);
+    Item CLOWNFISH_CUPCAKE = register("clownfish_cupcake", properties -> new Item(properties.craftRemainder(Items.BUCKET).food(food(1, 1, true))));
+    Item CHOCO_RAY_MUFFIN = register("choco_ray_muffin", properties -> new Item(properties.craftRemainder(Items.BUCKET).food(food(7, 0.3f, true))));
+    Item COOKED_HOGFISH_BACON = food("cooked_hogfish_bacon", 7, 0.4F, false);
+    Item DRIED_SEAHORSE = register("dried_seahorse", properties -> new Item(properties.food(
+        new FoodProperties.Builder().nutrition(1).saturationModifier(0.4F).alwaysEdible().build(),
+        Consumables.defaultFood().onConsume(new ClearNegativeEffectsConsumeEffect()).build()
+    )));
+    Item DWARF_ANGELFISH_TARTS = register("dwarf_angelfish_tarts", properties -> new Item(properties.craftRemainder(Items.BUCKET).food(food(1, 0.5f, false))));
+    Item GOBY_GUMMY = register("goby_gummy", properties -> new Item(properties.craftRemainder(Items.BUCKET).food(
+        food(2, 0.5f, false),
+        FAST_EATING
+    )));
+    Item JELLY_TART = register("jelly_tart", properties -> new Item(properties.craftRemainder(Items.BUCKET).food(food(4, 0.5f, true))));
+    Item JELLY_SANDWICH = register("jelly_sandwich", properties -> new Item(properties.craftRemainder(Items.BUCKET).food(food(8, 0.5f, true))));
+    Item JELLYFISH_JELLY = register("jellyfish_jelly", properties -> new Item(properties.stacksTo(16).craftRemainder(Items.GLASS_BOTTLE).food(
+        food(4, 0.5f, true),
+        Consumables.defaultDrink().sound(SoundEvents.HONEY_DRINK).onConsume(new ClearNegativeEffectsConsumeEffect()).build()
+    )));
+    Item HOGFISH_BACON = food("hogfish_bacon", 1, 0.5F, false);
+    Item IDOL_COOKIE = food("idol_cookie", 2, 0.1F, false);
+    Item PARROTFISH_PUNCH = register("parrotfish_punch", properties -> new Item(properties.stacksTo(16).food(
+        food(5, 1.2f, true),
+        effect(new MobEffectInstance(MobEffects.ABSORPTION, 300, 1), new MobEffectInstance(MobEffects.REGENERATION, 300, 0))
+    )));
+    Item PIPEFISH_SUSHI = register("pipefish_sushi", properties -> new Item(properties.craftRemainder(Items.BUCKET).component(
+        DataComponents.CONSUMABLE,
+        effect(new MobEffectInstance(MobEffects.INSTANT_HEALTH, 1, 1))
+    )));
+    Item ROASTED_CRAB_MEAT = food("roasted_crab_meat", 5, 0.6F, false);
+    Item SHARKBITE_SALAD = register("sharkbite_salad", properties -> new Item(properties.usingConvertsTo(Items.BOWL).stacksTo(16).food(food(5, 0.8f, false))));
+    Item TANGY_SOUP = register("tangy_soup", properties -> new Item(properties.usingConvertsTo(Items.GLASS_BOTTLE).stacksTo(1).craftRemainder(Items.GLASS_BOTTLE).food(
+        food(12, 0.8f, false),
+        effect(new MobEffectInstance(MobEffects.GLOWING, 600, 1))
+    )));
+    Item BACON_SANDWICH = register("bacon_sandwich", properties -> new Item(properties.food(
+        food(14, 0.7F, false),
+        effect(new MobEffectInstance(MobEffects.SLOWNESS, 300, 0))
+    )));
 
     // Special Meals
+    Item ROCKFISH_CANDY = register("rockfish_candy", properties -> new Item(properties.usingConvertsTo(Items.STICK).food(
+        food(5, 0.8f, false),
+        FAST_EATING
+    )));
+    Item FORBIDDEN_SOUP = register("forbidden_soup", properties -> new Item(properties.usingConvertsTo(Items.BOWL).stacksTo(16).food(food(10, 0.35f, false))));
+    Item SWEET_TOOTH_SEABURGER = register("sweet_tooth_seaburger", properties -> new Item(properties.usingConvertsTo(Items.BOWL).food(
+        food(3, 0.3f, false),
+        effect(new MobEffectInstance(MobEffects.NAUSEA, 200, 0), new MobEffectInstance(MobEffects.RESISTANCE, 600, 1))
+    )));
+    Item HAWAIIAN_BARBEQUE = register("hawaiian_barbeque", properties -> new Item(properties.usingConvertsTo(Items.BOWL).food(
+        food(9, 0.7f, false),
+        effect(new MobEffectInstance(MobEffects.SATURATION, 600, 0))
+    )));
 
-    public static final RegistryObject<Item> ROCKFISH_CANDY = ITEMS.register("rockfish_candy", () -> new StickFoodItem(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().nutrition(5).saturationMod(0.8F).fast().build())));
-
-    public static final RegistryObject<Item> FORBIDDEN_SOUP = ITEMS.register("forbidden_soup", () -> new BowlFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(10).saturationMod(0.35F).build())));
-
-    public static final RegistryObject<Item> SWEET_TOOTH_SEABURGER = ITEMS.register("sweet_tooth_seaburger", () -> new Item(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).effect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0), 1.0F).effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 1), 1.0F).build())));
-
-    public static final RegistryObject<Item> HAWAIIAN_BARBEQUE = ITEMS.register("hawaiian_barbeque", () -> new BowlFoodItem(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().nutrition(9).saturationMod(0.7F).effect(new MobEffectInstance(MobEffects.SATURATION, 600, 0), 1.0F).build())));
-
-    public static final RegistryObject<Item> TROPICAL_FISHSTICKS = ITEMS.register("tropical_fishsticks", () -> new BowlFoodItem(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5F).effect(new MobEffectInstance(MobEffects.JUMP, 600, 1), 0.7F).effect(new MobEffectInstance(MobEffects.DIG_SPEED, 600, 1), 0.7F).build())));
-
-    public static final RegistryObject<Item> SURF_N_TURF = ITEMS.register("surf_n_turf", () -> new BowlFoodItem(new Item.Properties().craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().nutrition(10).saturationMod(0.7F).build())));
-
-    public static final RegistryObject<Item> SEASUGAR_SORBET = ITEMS.register("seasugar_sorbet", () -> new BowlFoodItem(new Item.Properties().craftRemainder(Items.GLASS_BOTTLE).food(new FoodProperties.Builder().nutrition(7).saturationMod(0.3F).effect(new MobEffectInstance(MobEffects.REGENERATION, 600, 1), 1.0F).build())));
+    Item TROPICAL_FISHSTICKS = register("tropical_fishsticks", properties -> new Item(properties.usingConvertsTo(Items.BOWL).food(
+        food(5, 0.5f, false),
+        Consumables.defaultFood()
+            .onConsume(new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(MobEffects.JUMP_BOOST, 600, 1), 0.7F))
+            .onConsume(new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(MobEffects.HASTE, 600, 1), 0.7F))
+        .build()
+    )));
+    Item SURF_N_TURF = register("surf_n_turf", properties -> new Item(properties.usingConvertsTo(Items.BOWL).food(food(10, 0.7f, false))));
+    Item SEASUGAR_SORBET = register("seasugar_sorbet", properties -> new Item(properties.usingConvertsTo(Items.BOWL).food(
+        food(7, 0.3f, false),
+        effect(new MobEffectInstance(MobEffects.REGENERATION, 600, 1)))
+    ));
 
     // Corals
-    public static final RegistryObject<Item> BARREL_CORAL_FAN = ITEMS.register("barrel_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.BARREL_CORAL_FAN.get(), ReefBlocks.BARREL_CORAL_WALL_FAN.get(), new Item.Properties(), Direction.DOWN));
+    Item BARREL_CORAL_FAN = coralFan("barrel", ReefBlocks.BARREL_SET);
+    Item DEAD_BARREL_CORAL_FAN = deadCoralFan("barrel", ReefBlocks.BARREL_SET);
+    Item CHIMNEY_CORAL_FAN = coralFan("chimney", ReefBlocks.CHIMNEY_SET);
+    Item DEAD_CHIMNEY_CORAL_FAN = deadCoralFan("chimney", ReefBlocks.CHIMNEY_SET);
+    Item SHELF_CORAL_FAN = coralFan("shelf", ReefBlocks.SHELF_SET);
+    Item DEAD_SHELF_CORAL_FAN = deadCoralFan("shelf", ReefBlocks.SHELF_SET);
+    Item HAND_CORAL_FAN = coralFan("hand", ReefBlocks.HAND_SET);
+    Item DEAD_HAND_CORAL_FAN = deadCoralFan("hand", ReefBlocks.HAND_SET);
+    Item TOWER_CORAL_FAN = coralFan("tower", ReefBlocks.TOWER_SET);
+    Item DEAD_TOWER_CORAL_FAN = deadCoralFan("tower", ReefBlocks.TOWER_SET);
+    Item ROSE_CORAL_FAN = coralFan("rose", ReefBlocks.ROSE_SET);
+    Item DEAD_ROSE_CORAL_FAN = deadCoralFan("rose", ReefBlocks.ROSE_SET);
+    Item FLOWER_CORAL_FAN = coralFan("flower", ReefBlocks.FLOWER_SET);
+    Item DEAD_FLOWER_CORAL_FAN = deadCoralFan("flower", ReefBlocks.FLOWER_SET);
+    Item RING_CORAL_FAN = coralFan("ring", ReefBlocks.RING_SET);
+    Item DEAD_RING_CORAL_FAN = deadCoralFan("ring", ReefBlocks.RING_SET);
+    Item BUSH_CORAL_FAN = coralFan("bush", ReefBlocks.BUSH_SET);
+    Item DEAD_BUSH_CORAL_FAN = deadCoralFan("bush", ReefBlocks.BUSH_SET);
 
-    public static final RegistryObject<Item> DEAD_BARREL_CORAL_FAN = ITEMS.register("dead_barrel_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.DEAD_BARREL_CORAL_FAN.get(), ReefBlocks.DEAD_BARREL_CORAL_WALL_FAN.get(),
-                    new Item.Properties(), Direction.DOWN));
+    // Misc
+    Item MUSIC_DISC_CLAW = register("music_disc_claw", properties -> new Item(properties.stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(ReefJukeboxSongs.CRAB)));
+    Item GLOB_OF_JELLY = register("glob_of_jelly", Item::new);
 
-    public static final RegistryObject<Item> CHIMNEY_CORAL_FAN = ITEMS.register("chimney_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.CHIMNEY_CORAL_FAN.get(), ReefBlocks.CHIMNEY_CORAL_WALL_FAN.get(), new Item.Properties(), Direction.DOWN));
+    static Item spawnEgg(String name, EntityType<? extends Mob> type) {
+        return register(name + "_spawn_egg", properties -> new SpawnEggItem(type, properties));
+    }
+    
+    static Item bucket(String name, EntityType<? extends Mob> type) {
+        return register(name + "_bucket", properties -> new MobBucketItem(type, Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, properties));
+    }
 
-    public static final RegistryObject<Item> DEAD_CHIMNEY_CORAL_FAN = ITEMS.register("dead_chimney_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.DEAD_CHIMNEY_CORAL_FAN.get(), ReefBlocks.DEAD_CHIMNEY_CORAL_WALL_FAN.get(),
-                    new Item.Properties(), Direction.DOWN));
+    static Item coralFan(String name, CoralBlockSet set) {
+        return register(name + "_coral_fan", properties -> new StandingAndWallBlockItem(set.fan(), set.wallFan(), Direction.DOWN, properties));
+    }
 
-    public static final RegistryObject<Item> SHELF_CORAL_FAN = ITEMS.register("shelf_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.SHELF_CORAL_FAN.get(), ReefBlocks.SHELF_CORAL_WALL_FAN.get(), new Item.Properties(), Direction.DOWN));
+    static Item deadCoralFan(String name, CoralBlockSet set) {
+        return register("dead_" + name + "_coral_fan", properties -> new StandingAndWallBlockItem(set.deadFan(), set.deadWallFan(), Direction.DOWN, properties));
+    }
 
-    public static final RegistryObject<Item> DEAD_SHELF_CORAL_FAN = ITEMS.register("dead_shelf_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.DEAD_SHELF_CORAL_FAN.get(), ReefBlocks.DEAD_SHELF_CORAL_WALL_FAN.get(),
-                    new Item.Properties(), Direction.DOWN));
 
-    public static final RegistryObject<Item> HAND_CORAL_FAN = ITEMS.register("hand_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.HAND_CORAL_FAN.get(), ReefBlocks.HAND_CORAL_WALL_FAN.get(), new Item.Properties(), Direction.DOWN));
+    static Item rawFood(String name) {
+        return register("raw_" + name, properties -> new Item(properties.food(food(1, 0.4F, false))));
+    }
 
-    public static final RegistryObject<Item> DEAD_HAND_CORAL_FAN = ITEMS.register("dead_hand_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.DEAD_HAND_CORAL_FAN.get(), ReefBlocks.DEAD_HAND_CORAL_WALL_FAN.get(),
-                    new Item.Properties(), Direction.DOWN));
+    static Item rawHeartyFood(String name) {
+        return register("raw_" + name, properties -> new Item(properties.food(food(1, 0.8F, false))));
+    }
 
-    public static final RegistryObject<Item> TOWER_CORAL_FAN = ITEMS.register("tower_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.TOWER_CORAL_FAN.get(), ReefBlocks.TOWER_CORAL_WALL_FAN.get(), new Item.Properties(), Direction.DOWN));
+    static Item food(String name, int nutrition, float saturation, boolean alwaysEat) {
+        return register(name, properties -> new Item(properties.food(food(nutrition, saturation, alwaysEat))));
+    }
 
-    public static final RegistryObject<Item> DEAD_TOWER_CORAL_FAN = ITEMS.register("dead_tower_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.DEAD_TOWER_CORAL_FAN.get(), ReefBlocks.DEAD_TOWER_CORAL_WALL_FAN.get(),
-                    new Item.Properties(), Direction.DOWN));
+    static FoodProperties food(int nutrition, float saturation, boolean alwaysEat) {
+        var builder = new FoodProperties.Builder().nutrition(nutrition).saturationModifier(saturation);
+        if (alwaysEat) builder.alwaysEdible();
+        return builder.build();
+    }
 
-    public static final RegistryObject<Item> ROSE_CORAL_FAN = ITEMS.register("rose_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.ROSE_CORAL_FAN.get(), ReefBlocks.ROSE_CORAL_WALL_FAN.get(), new Item.Properties(), Direction.DOWN));
+    static Consumable effect(MobEffectInstance effects) {
+        return Consumables.defaultFood().onConsume(new ApplyStatusEffectsConsumeEffect(effects)).build();
+    }
 
-    public static final RegistryObject<Item> DEAD_ROSE_CORAL_FAN = ITEMS.register("dead_rose_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.DEAD_ROSE_CORAL_FAN.get(), ReefBlocks.DEAD_ROSE_CORAL_WALL_FAN.get(),
-                    new Item.Properties(), Direction.DOWN));
+    static Consumable effect(MobEffectInstance firstEffect, MobEffectInstance secondEffect) {
+        return Consumables.defaultFood().onConsume(new ApplyStatusEffectsConsumeEffect(List.of(firstEffect, secondEffect))).build();
+    }
 
-    public static final RegistryObject<Item> FLOWER_CORAL_FAN = ITEMS.register("flower_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.FLOWER_CORAL_FAN.get(), ReefBlocks.FLOWER_CORAL_WALL_FAN.get(), new Item.Properties(), Direction.DOWN));
+    static Item register(String name, Function<Item.Properties, Item> creator) {
+        ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, RainbowReef.id(name));
+        Item.Properties properties = new Item.Properties().setId(key);
+        return Registry.register(BuiltInRegistries.ITEM, key, creator.apply(properties));
+    }
 
-    public static final RegistryObject<Item> DEAD_FLOWER_CORAL_FAN = ITEMS.register("dead_flower_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.DEAD_FLOWER_CORAL_FAN.get(), ReefBlocks.DEAD_FLOWER_CORAL_WALL_FAN.get(),
-                    new Item.Properties(), Direction.DOWN));
-
-    public static final RegistryObject<Item> RING_CORAL_FAN = ITEMS.register("ring_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.RING_CORAL_FAN.get(), ReefBlocks.RING_CORAL_WALL_FAN.get(), new Item.Properties(), Direction.DOWN));
-
-    public static final RegistryObject<Item> DEAD_RING_CORAL_FAN = ITEMS.register("dead_ring_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.DEAD_RING_CORAL_FAN.get(), ReefBlocks.DEAD_RING_CORAL_WALL_FAN.get(),
-                    new Item.Properties(), Direction.DOWN));
-
-    public static final RegistryObject<Item> BUSH_CORAL_FAN = ITEMS.register("bush_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.BUSH_CORAL_FAN.get(), ReefBlocks.BUSH_CORAL_WALL_FAN.get(), new Item.Properties(), Direction.DOWN));
-
-    public static final RegistryObject<Item> DEAD_BUSH_CORAL_FAN = ITEMS.register("dead_bush_coral_fan",
-            () -> new StandingAndWallBlockItem(ReefBlocks.DEAD_BUSH_CORAL_FAN.get(), ReefBlocks.DEAD_BUSH_CORAL_WALL_FAN.get(),
-                    new Item.Properties(), Direction.DOWN));
-
-    public static void register(IEventBus eventBus) {
-        ITEMS.register(eventBus);
+    static void init() {
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.thevaliantsquidward.rainbowreef.registry.ReefSounds;
+import net.thevaliantsquidward.rainbowreef.registry.ReefSoundEvents;
 
 
 public class JellyBlock extends Block {
@@ -16,19 +16,19 @@ public class JellyBlock extends Block {
         super(pProperties);
     }
 
-    public void fallOn(Level pLevel, BlockState pState, BlockPos pPos, Entity pEntity, float pFallDistance) {
+    public void fallOn(Level pLevel, BlockState pState, BlockPos pPos, Entity pEntity, double pFallDistance) {
         if (pEntity.isSuppressingBounce()) {
             super.fallOn(pLevel, pState, pPos, pEntity, pFallDistance);
         } else {
             pEntity.causeFallDamage(pFallDistance, 0.0F, pLevel.damageSources().fall());
-            pEntity.playSound(ReefSounds.JELLYBOUNCE.get());
+            pEntity.playSound(ReefSoundEvents.JELLYBOUNCE);
         }
 
     }
 
-    public void updateEntityAfterFallOn(BlockGetter pLevel, Entity pEntity) {
+    public void updateEntityMovementAfterFallOn(BlockGetter pLevel, Entity pEntity) {
         if (pEntity.isSuppressingBounce()) {
-            super.updateEntityAfterFallOn(pLevel, pEntity);
+            super.updateEntityMovementAfterFallOn(pLevel, pEntity);
         } else {
             this.bounceUp(pEntity);
         }
@@ -37,12 +37,10 @@ public class JellyBlock extends Block {
 
     private void bounceUp(Entity pEntity) {
         Vec3 vec3 = pEntity.getDeltaMovement();
-        double d0 = pEntity instanceof LivingEntity ? 1.0D : 0.8D;
-
         if (vec3.y < 0.0D) {
+            double d0 = pEntity instanceof LivingEntity ? 1.0D : 0.8D;
             pEntity.setDeltaMovement(vec3.x, -vec3.y * d0, vec3.z);
         }
-
     }
 
     public void stepOn(Level pLevel, BlockPos pPos, BlockState pState, Entity pEntity) {

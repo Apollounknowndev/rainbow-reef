@@ -1,4 +1,6 @@
 {
-  "type": "rainbowreef:floor_nem",
-  "config": {}
+  "type": "rainbowreef:anemone",
+  "config": {
+    "blocks": "#rainbowreef:temperate_nems"
+  }
 }
