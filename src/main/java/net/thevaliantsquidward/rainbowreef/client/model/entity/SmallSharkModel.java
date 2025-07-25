@@ -71,8 +71,8 @@ public class SmallSharkModel extends ReefModel<TailBearerRenderState> {
 
 		this.core.xRot = state.xRot * (Mth.DEG_TO_RAD);
 
-		this.swimAnimation.apply(state.swim, state.ageInTicks, state.walkAnimationSpeed * 8);
-		this.idleAnimation.apply(state.idle, state.ageInTicks, 1);
+		this.swimAnimation.apply(state.swim, state.ageInTicks);
+		this.idleAnimation.apply(state.idle, state.ageInTicks);
 
 		if (state.isInWater) {
 			this.tail.yRot = this.tail.yRot - ((float) ((MathHelpers.LerpDegrees(state.currentTailYaws[0], state.lastTailYaws[0], 0.1))));

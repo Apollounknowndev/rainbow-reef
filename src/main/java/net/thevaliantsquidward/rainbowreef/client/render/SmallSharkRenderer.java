@@ -1,9 +1,13 @@
 package net.thevaliantsquidward.rainbowreef.client.render;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.util.Mth;
 import net.thevaliantsquidward.rainbowreef.client.model.entity.SmallSharkModel;
 import net.thevaliantsquidward.rainbowreef.client.render.state.TailBearerRenderState;
 import net.thevaliantsquidward.rainbowreef.entity.SmallShark;
+import net.thevaliantsquidward.rainbowreef.entity.interfaces.kinematics.IKSolver;
 import net.thevaliantsquidward.rainbowreef.registry.ReefModelLayers;
 
 public class SmallSharkRenderer extends ReefRenderer<SmallShark, TailBearerRenderState> {
@@ -22,10 +26,23 @@ public class SmallSharkRenderer extends ReefRenderer<SmallShark, TailBearerRende
         state.idle.copyFrom(shark.idleAnimationState);
         state.swim.copyFrom(shark.swimAnimationState);
 
-        state.lastTailYaws = shark.tailKinematics.getTailYaws();
-        state.lastTailPitches = shark.tailKinematics.getTailPitches();
+        IKSolver.Snapshot snapshot = shark.tailKinematics.getSnapshot();
 
-        state.currentTailYaws = shark.tailKinematics.getCurrentTailYaws();
-        state.currentTailPitches = shark.tailKinematics.getCurrentTailPitches();
+        state.lastTilt = shark.prevTilt;
+        state.lastTailYaws = snapshot.lastTailYaws();
+        state.lastTailPitches = snapshot.lastTailPitches();
+
+        state.currentTilt = shark.tilt;
+        state.currentTailYaws = snapshot.currentTailYaws();
+        state.currentTailPitches = snapshot.currentTailPitches();
+
+        state.returnYaws = () -> shark.tailKinematics.setCurrentTailYaws(state.currentTailYaws);
+        state.returnPitches = () -> shark.tailKinematics.setCurrentTailPitches(state.currentTailPitches);
+    }
+
+    @Override
+    protected void setupRotations(TailBearerRenderState state, PoseStack stack, float f, float g) {
+        super.setupRotations(state, stack, f, g);
+        stack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(g, -state.lastTilt, -state.currentTilt)));
     }
 }

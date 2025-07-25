@@ -68,11 +68,6 @@ public class ClownfishModel extends ReefFishModel<ReefRenderState> {
 	}
 
 	@Override
-	public float getSwimSpeed(ReefRenderState state) {
-		return 0.5f + state.walkAnimationSpeed * 4;
-	}
-
-	@Override
 	public ModelPart xRotatedPart() {
 		return this.core;
 	}

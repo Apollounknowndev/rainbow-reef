@@ -27,11 +27,7 @@ public abstract class ReefFishModel<S extends ReefRenderState> extends ReefModel
         if (this.xRotatedPart() != null) {
             this.xRotatedPart().xRot = state.xRot * Mth.DEG_TO_RAD;
         }
-        this.swimAnimation.apply(state.swim, state.ageInTicks, getSwimSpeed(state));
+        this.swimAnimation.apply(state.swim, state.ageInTicks);
         this.flopAnimation.apply(state.flop, state.ageInTicks);
-    }
-
-    public float getSwimSpeed(S state) {
-        return state.walkAnimationSpeed * 4;
     }
 }

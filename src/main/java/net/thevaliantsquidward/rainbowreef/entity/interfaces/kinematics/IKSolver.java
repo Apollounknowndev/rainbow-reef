@@ -357,12 +357,20 @@ public class IKSolver {
         return tailPitches;
     }
 
-    public double[] getCurrentTailYaws() {
+    public double[] setCurrentTailYaws() {
         return currentTailYaws;
     }
 
-    public double[] getCurrentTailPitches() {
+    public double[] setCurrentTailPitches() {
         return currentTailPitches;
+    }
+
+    public void setCurrentTailYaws(double[] yaws) {
+        currentTailYaws = yaws;
+    }
+
+    public void setCurrentTailPitches(double[] pitches) {
+        currentTailPitches = pitches;
     }
 
     public double getBodyPitch() {
@@ -398,5 +406,12 @@ public class IKSolver {
                 level.addAlwaysVisibleParticle(ParticleTypes.BUBBLE_POP, (nodes[i].x), (nodes[i].y + viewOffset), (nodes[i].z), 0, 0.0D, 0.0D);
         //    }
         }
+    }
+
+    public Snapshot getSnapshot() {
+        return new Snapshot(this.tailYaws, this.tailPitches, this.currentTailYaws, this.currentTailPitches);
+    }
+
+    public record Snapshot(double[] lastTailYaws, double[] lastTailPitches, double[] currentTailYaws, double[] currentTailPitches) {
     }
 }

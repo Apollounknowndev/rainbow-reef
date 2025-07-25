@@ -25,7 +25,7 @@ public class RayRenderer extends ReefRenderer<Ray, TailBearerRenderState> {
         state.lastTailYaws = ray.tailKinematics.getTailYaws();
         state.lastTailPitches = ray.tailKinematics.getTailPitches();
 
-        state.currentTailYaws = ray.tailKinematics.getCurrentTailYaws();
-        state.currentTailPitches = ray.tailKinematics.getCurrentTailPitches();
+        state.currentTailYaws = ray.tailKinematics.setCurrentTailYaws();
+        state.currentTailPitches = ray.tailKinematics.setCurrentTailPitches();
     }
 }

@@ -46,11 +46,6 @@ public class PipefishModel extends ReefFishModel<ReefRenderState> {
 	}
 
 	@Override
-	public float getSwimSpeed(ReefRenderState state) {
-		return 1.25f * (state.walkAnimationSpeed * 4.0f + 0.8f);
-	}
-
-	@Override
 	public ModelPart xRotatedPart() {
 		return this.root;
 	}
