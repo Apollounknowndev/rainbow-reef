@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "rainbowreef:item/legacy/spawn_egg",
+    "layer1": "rainbowreef:item/legacy/spawn_egg_overlay"
+  }
+}

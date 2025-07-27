@@ -41,7 +41,7 @@ public interface ReefItems {
     Item SMALL_SHARK_SPAWN_EGG = spawnEgg("small_shark", ReefEntities.SMALL_SHARK);
     Item CLOWNFISH_SPAWN_EGG = spawnEgg("clownfish", ReefEntities.CLOWNFISH);
     Item BASSLET_SPAWN_EGG = spawnEgg("basslet", ReefEntities.BASSLET);
-    Item BUTTERFISH_SPAWN_EGG = spawnEgg("butterfish", ReefEntities.BUTTERFLYFISH);
+    Item BUTTERFISH_SPAWN_EGG = spawnEgg("butterflyfish", ReefEntities.BUTTERFLYFISH);
     Item HOGFISH_SPAWN_EGG = spawnEgg("hogfish", ReefEntities.HOGFISH);
     Item ANGELFISH_SPAWN_EGG = spawnEgg("angelfish", ReefEntities.ANGELFISH);
     Item CRAB_SPAWN_EGG = spawnEgg("crab", ReefEntities.CRAB);
