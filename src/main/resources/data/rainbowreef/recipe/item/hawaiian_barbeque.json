@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:bowl",
+    "rainbowreef:raw_moorish_idol",
+    "rainbowreef:raw_angelfish",
+    "rainbowreef:raw_dwarf_angelfish"
+  ],
+  "result": {
+    "id": "rainbowreef:hawaiian_barbeque"
+  }
+}

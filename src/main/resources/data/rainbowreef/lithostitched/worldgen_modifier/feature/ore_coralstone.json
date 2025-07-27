@@ -1,0 +1,6 @@
+{
+  "type": "lithostitched:add_features",
+  "biomes": "minecraft:warm_ocean",
+  "features": "rainbowreef:ore_coralstone",
+  "step": "raw_generation"
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SUS"
+  ],
+  "key": {
+    "S": "minecraft:wheat",
+    "U": "rainbowreef:raw_basslet"
+  },
+  "result": {
+    "count": 8,
+    "id": "rainbowreef:basslet_cookie"
+  }
+}

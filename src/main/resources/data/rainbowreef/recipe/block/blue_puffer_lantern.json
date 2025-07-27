@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#C#",
+    "BPB",
+    "#T#"
+  ],
+  "key": {
+    "#": "minecraft:iron_nugget",
+    "C": "minecraft:chain",
+    "B": "minecraft:blue_dye",
+    "P": "minecraft:pufferfish",
+    "T": "minecraft:torch"
+  },
+  "result": {
+    "id": "rainbowreef:blue_puffer_lantern"
+  }
+}

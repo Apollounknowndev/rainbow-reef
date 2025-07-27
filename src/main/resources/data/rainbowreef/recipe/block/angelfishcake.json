@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:milk_bucket",
+    "B": "minecraft:sugar",
+    "C": "minecraft:wheat",
+    "E": "rainbowreef:raw_angelfish"
+  },
+  "pattern": [
+    "EEE",
+    "BAB",
+    "CCC"
+  ],
+  "result": {
+    "id": "rainbowreef:angelfish_cake"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "rainbowreef:raw_parrotfish",
+    "minecraft:sugar",
+    "minecraft:honey_bottle",
+    "minecraft:sweet_berries",
+    "minecraft:glistering_melon_slice"
+  ],
+  "result": {
+    "id": "rainbowreef:parrotfish_punch"
+  }
+}

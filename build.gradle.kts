@@ -48,6 +48,7 @@ cloche {
 
             dependencies {
                 fabricApi("0.129.0")
+                modImplementation("maven.modrinth:lithostitched:1.4.11-fabric-1.21.6")
             }
 
             includedClient()

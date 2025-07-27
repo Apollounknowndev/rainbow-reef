@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:snowball",
+    "minecraft:snowball",
+    "rainbowreef:jellyfish_jelly",
+    "rainbowreef:parrotfish_punch"
+  ],
+  "result": {
+    "id": "rainbowreef:seasugar_sorbet"
+  }
+}

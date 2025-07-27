@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "---",
+    "-+-",
+    "-#-"
+  ],
+  "key": {
+    "#": "minecraft:magma_block",
+    "+": "minecraft:soul_sand",
+    "-": "minecraft:sand"
+  },
+  "result": {
+    "id": "rainbowreef:bubbler"
+  }
+}

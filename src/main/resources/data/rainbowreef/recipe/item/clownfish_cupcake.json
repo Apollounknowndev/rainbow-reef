@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:sugar",
+    "minecraft:paper",
+    "minecraft:wheat",
+    "minecraft:milk_bucket",
+    "minecraft:egg",
+    "rainbowreef:raw_clownfish"
+  ],
+  "result": {
+    "id": "rainbowreef:clownfish_cupcake"
+  }
+}

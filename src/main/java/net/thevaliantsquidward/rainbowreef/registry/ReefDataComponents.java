@@ -15,7 +15,7 @@ public interface ReefDataComponents {
     DataComponentType<ArrowCrab.Variant> ARROW_CRAB_VARIANT = register("arrow_crab/variant", builder -> builder.persistent(ArrowCrab.Variant.CODEC));
     DataComponentType<Basslet.Variant> BASSLET_VARIANT = register("basslet/variant", builder -> builder.persistent(Basslet.Variant.CODEC));
     DataComponentType<Boxfish.Variant> BOXFISH_VARIANT = register("boxfish/variant", builder -> builder.persistent(Boxfish.Variant.CODEC));
-    DataComponentType<Butterfish.Variant> BUTTERFISH_VARIANT = register("butterfish/variant", builder -> builder.persistent(Butterfish.Variant.CODEC));
+    DataComponentType<Butterflyfish.Variant> BUTTERFISH_VARIANT = register("butterfish/variant", builder -> builder.persistent(Butterflyfish.Variant.CODEC));
     DataComponentType<Crab.Variant> CRAB_VARIANT = register("crab/variant", builder -> builder.persistent(Crab.Variant.CODEC));
     DataComponentType<Clownfish.Variant> CLOWNFISH_VARIANT = register("clownfish/variant", builder -> builder.persistent(Clownfish.Variant.CODEC));
     DataComponentType<DwarfAngelfish.Variant> DWARF_ANGELFISH_VARIANT = register("dwarf_angelfish/variant", builder -> builder.persistent(DwarfAngelfish.Variant.CODEC));

@@ -13,19 +13,23 @@ import net.thevaliantsquidward.rainbowreef.client.render.state.ParrotfishRenderS
 import net.thevaliantsquidward.rainbowreef.entity.Parrotfish;
 import net.thevaliantsquidward.rainbowreef.entity.interfaces.ReefVariant;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ParrotfishEepyLayer extends RenderLayer<ParrotfishRenderState, EntityModel<ParrotfishRenderState>> {
+    private final Map<ReefVariant, ResourceLocation> variantTextures;
+
     public ParrotfishEepyLayer(RenderLayerParent<ParrotfishRenderState, EntityModel<ParrotfishRenderState>> parent) {
         super(parent);
-    }
-
-    public ResourceLocation eepyTextures(ReefVariant variant) {
-        return RainbowReef.id("textures/entity/parroteepy/parrotfish_sleepy_" + variant.getSerializedName() + ".png");
+        this.variantTextures = new HashMap<>();
+        for (ReefVariant variant : Parrotfish.Variant.values()) {
+            this.variantTextures.put(variant, RainbowReef.id("textures/entity/parrotfish/sleepy/"+variant.getSerializedName()+".png"));
+        }
     }
 
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, ParrotfishRenderState state, float f, float g) {
         if (!state.isInvisible && state.night && state.isInWater) {
-            ResourceLocation texture = eepyTextures(state.variant);
-            coloredCutoutModelCopyLayerRender(this.getParentModel(), texture, poseStack, buffer, packedLight, state, -1);
+            coloredCutoutModelCopyLayerRender(this.getParentModel(), variantTextures.get(state.variant), poseStack, buffer, packedLight, state, -1);
         }
     }
 }

@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class RedSandBubblerBlock extends Block {
-    private static final int BUBBLE_COLUMN_CHECK_DELAY = 20;
     public RedSandBubblerBlock(Properties pProperties) {
         super(pProperties);
     }

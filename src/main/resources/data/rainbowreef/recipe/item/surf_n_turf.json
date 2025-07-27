@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:bowl",
+    "minecraft:cooked_beef",
+    "rainbowreef:roasted_crab_meat",
+    "rainbowreef:roasted_crab_meat",
+    "rainbowreef:roasted_crab_meat"
+  ],
+  "result": {
+    "id": "rainbowreef:surf_n_turf"
+  }
+}

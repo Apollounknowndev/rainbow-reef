@@ -44,7 +44,10 @@ public class AnemoneBlock extends DirectionalBlock implements LiquidBlockContain
 
     public AnemoneBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, true));
+        this.registerDefaultState(this.stateDefinition.any()
+            .setValue(WATERLOGGED, true)
+            .setValue(FACING, Direction.NORTH)
+        );
     }
 
     @Override

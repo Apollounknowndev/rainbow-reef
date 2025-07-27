@@ -1,0 +1,13 @@
+{
+  "type" :"lithostitched:add_biome_spawns",
+  "biomes" : [
+    "minecraft:ocean",
+    "minecraft:deep_ocean"
+  ],
+  "spawners" : {
+    "type" : "rainbowreef:jellyfish",
+    "weight" : 3,
+    "minCount" : 1,
+    "maxCount" : 3
+  }
+}

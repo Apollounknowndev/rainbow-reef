@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "rainbowreef:raw_goby",
+    "minecraft:sugar",
+    "minecraft:slime_ball"
+  ],
+  "result": {
+    "count":4,
+    "id": "rainbowreef:goby_gummy"
+  }
+}

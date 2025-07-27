@@ -93,9 +93,9 @@ public class FakeBubbleBlock extends Block implements BucketPickup {
 
 
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
-        double d0 = (double)pPos.getX();
-        double d1 = (double)pPos.getY();
-        double d2 = (double)pPos.getZ();
+        double d0 = pPos.getX();
+        double d1 = pPos.getY();
+        double d2 = pPos.getZ();
 
         pLevel.addAlwaysVisibleParticle(ParticleTypes.BUBBLE_COLUMN_UP, d0 + 0.5D, d1, d2 + 0.5D, 0.0D, 0.04D, 0.0D);
         pLevel.addAlwaysVisibleParticle(ParticleTypes.BUBBLE_COLUMN_UP, d0 + (double)pRandom.nextFloat(), d1 + (double)pRandom.nextFloat(), d2 + (double)pRandom.nextFloat(), 0.0D, 0.04D, 0.0D);

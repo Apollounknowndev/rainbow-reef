@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:sugar",
+    "minecraft:wheat",
+    "minecraft:egg",
+    "rainbowreef:jellyfish_jelly"
+  ],
+  "result": {
+    "id": "rainbowreef:jelly_tart"
+  }
+}

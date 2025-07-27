@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "---",
+    "###",
+    "---"
+  ],
+  "key": {
+    "#": "rainbowreef:cooked_hogfish_bacon",
+    "-": "minecraft:bread"
+  },
+  "result": {
+    "id": "rainbowreef:bacon_sandwich"
+  }
+}

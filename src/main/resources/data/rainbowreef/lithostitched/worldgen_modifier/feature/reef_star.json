@@ -1,0 +1,10 @@
+{
+  "type": "lithostitched:add_features",
+  "biomes" : [
+    "minecraft:mangrove_swamp",
+    "minecraft:warm_ocean",
+    "minecraft:beach"
+  ],
+  "features": "rainbowreef:reef_star",
+  "step": "vegetal_decoration"
+}

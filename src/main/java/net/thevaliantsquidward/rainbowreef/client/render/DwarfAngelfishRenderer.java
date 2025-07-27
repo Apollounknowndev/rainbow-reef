@@ -8,7 +8,7 @@ import net.thevaliantsquidward.rainbowreef.registry.ReefModelLayers;
 
 public class DwarfAngelfishRenderer extends ReefRenderer<DwarfAngelfish, ReefRenderState> {
     public DwarfAngelfishRenderer(EntityRendererProvider.Context context) {
-        super("dwarfangelfish", DwarfAngelfish.Variant.values(), context, new DwarfAngelfishModel(context.bakeLayer(ReefModelLayers.DWARF_ANGELFISH_LAYER)), 0.4F);
+        super("dwarf_angelfish", DwarfAngelfish.Variant.values(), context, new DwarfAngelfishModel(context.bakeLayer(ReefModelLayers.DWARF_ANGELFISH_LAYER)), 0.4F);
     }
 
     @Override

@@ -1,0 +1,12 @@
+{
+  "type" :"lithostitched:add_biome_spawns",
+  "biomes" : [
+    "minecraft:warm_ocean"
+  ],
+  "spawners" : {
+   "type" : "rainbowreef:goby",
+    "weight" : 40,
+    "minCount" : 1,
+    "maxCount" : 5
+  }
+}

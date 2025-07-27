@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:glow_berries",
+    "minecraft:glow_berries",
+    "minecraft:bowl",
+    "minecraft:honey_bottle",
+    "rainbowreef:raw_tang"
+  ],
+  "result": {
+    "id": "rainbowreef:tangy_soup"
+  }
+}

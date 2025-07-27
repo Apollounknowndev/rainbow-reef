@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": "#rainbowreef:crab_items",
+  "result": {
+    "id": "rainbowreef:roasted_crab_meat"
+  },
+  "experience": 1,
+  "cookingtime": 200
+}

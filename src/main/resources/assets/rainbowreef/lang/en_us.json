@@ -24,7 +24,7 @@
   "item.rainbowreef.eel_bucket" : "Bucket of Eel",
 
   "item.rainbowreef.music_disc_claw" : "Music Disc",
-  "item.rainbowreef.music_disc_claw.desc" : "TheValiantSquidward - Claw",
+  "jukebox_song.rainbowreef.claw" : "TheValiantSquidward - Claw",
 
   "item.rainbowreef.raw_goby" : "Raw Goby",
   "item.rainbowreef.raw_ray" : "Raw Ray",

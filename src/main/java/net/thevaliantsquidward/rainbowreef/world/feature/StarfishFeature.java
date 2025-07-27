@@ -42,30 +42,31 @@ public class StarfishFeature extends Feature<StarfishConfig> {
             return false;
         }
 
-        for (Direction direction: Direction.allShuffled(random)) {
+        for (Direction direction : Direction.allShuffled(random)) {
             if (config.canPlaceOn().contains(level.getBlockState(origin.relative(direction)).getBlockHolder())) {
                 BlockState toPlace = starfish.defaultBlockState();
-                if (level.getFluidState(origin).is(Fluids.WATER)) {
-                    toPlace.setValue(BlockStateProperties.WATERLOGGED, true);
-                }
                 if (direction.getAxis().isVertical()) {
-                    toPlace.setValue(
+                    toPlace = toPlace.setValue(
                         FaceAttachedHorizontalDirectionalBlock.FACE,
                         direction == Direction.DOWN ? AttachFace.FLOOR : AttachFace.CEILING
                     );
-                    toPlace.setValue(
+                    toPlace = toPlace.setValue(
                         HorizontalDirectionalBlock.FACING,
                         Direction.allShuffled(random).stream().filter(dir -> dir.getAxis() != Direction.Axis.Y).findFirst().get()
                     );
                 } else {
-                    toPlace.setValue(
+                    toPlace = toPlace.setValue(
                         FaceAttachedHorizontalDirectionalBlock.FACE,
                         AttachFace.WALL
                     );
-                    toPlace.setValue(
+                    toPlace = toPlace.setValue(
                         HorizontalDirectionalBlock.FACING,
                         direction.getOpposite()
                     );
+                }
+                if (level.getFluidState(origin).is(Fluids.WATER)) {
+                    toPlace = toPlace.setValue(BlockStateProperties.WATERLOGGED, true);
+                    level.scheduleTick(origin, Fluids.WATER, 1);
                 }
                 level.setBlock(origin, toPlace, 3);
                 return true;

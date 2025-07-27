@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#rainbowreef:rainbow_fishes"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:tropical_fish"
+  }
+}

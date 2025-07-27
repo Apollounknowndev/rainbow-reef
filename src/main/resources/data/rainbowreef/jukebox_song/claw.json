@@ -1,0 +1,8 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.rainbowreef.claw"
+  },
+  "length_in_seconds": 112.0,
+  "sound_event": "rainbowreef:music_disc.claw"
+}

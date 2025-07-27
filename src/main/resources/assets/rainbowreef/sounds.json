@@ -1,12 +1,13 @@
 {
-  "claw": {
-    "sounds":[
+  "music_disc.claw": {
+    "sounds": [
       {
         "name": "rainbowreef:claw",
         "stream": true
       }
     ]
-  },"jellyhit": {
+  },
+  "jellyhit": {
     "category": "neutral",
     "sounds": [
       {
@@ -27,7 +28,6 @@
     "sounds": [
       {
         "name": "rainbowreef:jellyzap1"
-
       },
       {
         "name": "rainbowreef:jellyzap2"

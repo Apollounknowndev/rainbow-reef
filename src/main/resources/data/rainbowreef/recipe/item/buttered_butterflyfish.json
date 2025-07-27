@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "U",
+    "X"
+  ],
+  "key": {
+    "S": "minecraft:milk_bucket",
+    "U": "rainbowreef:raw_butterflyfish",
+    "X": "minecraft:bread"
+  },
+  "result": {
+    "id": "rainbowreef:buttered_butterflyfish"
+  }
+}

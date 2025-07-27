@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:seagrass",
+    "minecraft:bowl",
+    "minecraft:seagrass",
+    "rainbowreef:raw_small_shark"
+  ],
+  "result": {
+    "id": "rainbowreef:sharkbite_salad"
+  }
+}

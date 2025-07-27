@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:bowl",
+    "minecraft:bread",
+    "rainbowreef:raw_clownfish",
+    "rainbowreef:raw_tang",
+    "rainbowreef:raw_butterflyfish"
+  ],
+  "result": {
+    "id": "rainbowreef:tropical_fishsticks"
+  }
+}

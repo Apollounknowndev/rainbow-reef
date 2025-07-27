@@ -17,7 +17,7 @@ public interface ReefEntities {
     EntityType<ArrowCrab> ARROW_CRAB = register("arrow_crab", builder(ArrowCrab::new, MobCategory.CREATURE, 0.5f, 0.5f));
     EntityType<Basslet> BASSLET = register("basslet", builder(Basslet::new, MobCategory.WATER_AMBIENT, 0.5f, 0.5f));
     EntityType<Boxfish> BOXFISH = register("boxfish", builder(Boxfish::new, MobCategory.WATER_AMBIENT, 0.5f, 0.5f));
-    EntityType<Butterfish> BUTTERFISH = register("butterflyfish", builder(Butterfish::new, MobCategory.WATER_AMBIENT, 0.5f, 0.5f));
+    EntityType<Butterflyfish> BUTTERFLYFISH = register("butterflyfish", builder(Butterflyfish::new, MobCategory.WATER_AMBIENT, 0.5f, 0.5f));
     EntityType<Clownfish> CLOWNFISH = register("clownfish", builder(Clownfish::new, MobCategory.WATER_AMBIENT, 0.3f, 0.3f));
     EntityType<Crab> CRAB = register("crab", builder(Crab::new, MobCategory.CREATURE, 0.5f, 0.5f));
     EntityType<DwarfAngelfish> DWARF_ANGELFISH = register("dwarf_angelfish", builder(DwarfAngelfish::new, MobCategory.WATER_AMBIENT, 0.5f, 0.5f));
@@ -48,7 +48,7 @@ public interface ReefEntities {
         SpawnPlacements.register(ARROW_CRAB, SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AbstractCrab::canSpawn);
         SpawnPlacements.register(BASSLET, SpawnPlacementTypes.IN_WATER, Heightmap.Types.WORLD_SURFACE, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
         SpawnPlacements.register(BOXFISH, SpawnPlacementTypes.IN_WATER, Heightmap.Types.WORLD_SURFACE, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
-        SpawnPlacements.register(BUTTERFISH, SpawnPlacementTypes.IN_WATER, Heightmap.Types.WORLD_SURFACE, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
+        SpawnPlacements.register(BUTTERFLYFISH, SpawnPlacementTypes.IN_WATER, Heightmap.Types.WORLD_SURFACE, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
         SpawnPlacements.register(CLOWNFISH, SpawnPlacementTypes.IN_WATER, Heightmap.Types.WORLD_SURFACE, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
         SpawnPlacements.register(CRAB, SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AbstractCrab::canSpawn);
         SpawnPlacements.register(DWARF_ANGELFISH, SpawnPlacementTypes.IN_WATER, Heightmap.Types.WORLD_SURFACE, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
@@ -67,7 +67,7 @@ public interface ReefEntities {
         FabricDefaultAttributeRegistry.register(ARROW_CRAB, AbstractCrab.setAttributes());
         FabricDefaultAttributeRegistry.register(BASSLET, Basslet.setAttributes());
         FabricDefaultAttributeRegistry.register(BOXFISH, Boxfish.setAttributes());
-        FabricDefaultAttributeRegistry.register(BUTTERFISH, Butterfish.setAttributes());
+        FabricDefaultAttributeRegistry.register(BUTTERFLYFISH, Butterflyfish.setAttributes());
         FabricDefaultAttributeRegistry.register(CLOWNFISH, Clownfish.setAttributes());
         FabricDefaultAttributeRegistry.register(CRAB, AbstractCrab.setAttributes());
         FabricDefaultAttributeRegistry.register(DWARF_ANGELFISH, DwarfAngelfish.setAttributes());

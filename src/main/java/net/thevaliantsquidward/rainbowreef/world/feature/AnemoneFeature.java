@@ -49,9 +49,9 @@ public class AnemoneFeature extends Feature<AnemoneConfig> {
             if (level.getBlockState(origin.relative(direction)).isFaceSturdy(level, origin, direction.getOpposite())) {
                 BlockState toPlace = anemone.defaultBlockState();
                 if (level.getFluidState(origin).is(Fluids.WATER)) {
-                    toPlace.setValue(BlockStateProperties.WATERLOGGED, true);
+                    toPlace = toPlace.setValue(BlockStateProperties.WATERLOGGED, true);
                 }
-                toPlace.setValue(
+                toPlace = toPlace.setValue(
                     DirectionalBlock.FACING,
                     direction.getOpposite()
                 );

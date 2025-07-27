@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": "rainbowreef:raw_seahorse",
+  "result": {
+    "id": "rainbowreef:dried_seahorse"
+  },
+  "experience": 1,
+  "cookingtime": 600
+}

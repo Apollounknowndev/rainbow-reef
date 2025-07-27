@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#C#",
+    "OPO",
+    "#T#"
+  ],
+  "key": {
+    "#": "minecraft:iron_nugget",
+    "C": "minecraft:chain",
+    "O": "minecraft:orange_dye",
+    "P": "minecraft:pufferfish",
+    "T": "minecraft:torch"
+  },
+  "result": {
+    "id": "rainbowreef:orange_puffer_lantern"
+  }
+}

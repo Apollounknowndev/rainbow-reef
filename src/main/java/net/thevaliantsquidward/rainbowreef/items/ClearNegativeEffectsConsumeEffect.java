@@ -23,7 +23,7 @@ public record ClearNegativeEffectsConsumeEffect() implements ConsumeEffect {
     @Override
     public boolean apply(Level level, ItemStack stack, LivingEntity entity) {
         boolean applied = false;
-        for (MobEffectInstance effect : entity.getActiveEffects()) {
+        for (MobEffectInstance effect : entity.getActiveEffects().stream().toList()) {
             if (!effect.isAmbient() && !effect.getEffect().value().isInstantenous() && !effect.getEffect().value().isBeneficial()) {
                 entity.removeEffect(effect.getEffect());
                 applied = true;

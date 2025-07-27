@@ -51,7 +51,7 @@ public class Hogfish extends ReefFishEntity<Hogfish.Variant> {
 
     @Override
     public Variant[] getAllVariants() {
-        return new Variant[0];
+        return Variant.values();
     }
 
     protected void setupAnimationStates() {

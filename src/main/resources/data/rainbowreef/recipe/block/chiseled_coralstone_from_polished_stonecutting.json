@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "rainbowreef:polished_coralstone",
+  "result": {
+    "id": "rainbowreef:chiseled_coralstone"
+  },
+  "count": 1
+}

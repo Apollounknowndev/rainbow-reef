@@ -6,7 +6,7 @@ import net.minecraft.world.item.JukeboxSong;
 import net.thevaliantsquidward.rainbowreef.RainbowReef;
 
 public interface ReefJukeboxSongs {
-    ResourceKey<JukeboxSong> CRAB = create("crab");
+    ResourceKey<JukeboxSong> CLAW = create("claw");
 
     private static ResourceKey<JukeboxSong> create(String name) {
         return ResourceKey.create(Registries.JUKEBOX_SONG, RainbowReef.id(name));

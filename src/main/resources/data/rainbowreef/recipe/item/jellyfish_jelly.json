@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:sugar",
+    "minecraft:glass_bottle",
+    "rainbowreef:glob_of_jelly",
+    "rainbowreef:glob_of_jelly",
+    "rainbowreef:glob_of_jelly"
+  ],
+  "result": {
+    "id": "rainbowreef:jellyfish_jelly"
+  }
+}

@@ -1,8 +1,6 @@
 package net.thevaliantsquidward.rainbowreef.registry;
 
 
-import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
-import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
@@ -39,11 +37,11 @@ public interface ReefItems {
     Item SEAHORSE_SPAWN_EGG = spawnEgg("seahorse", ReefEntities.SEAHORSE);
     Item BOXFISH_SPAWN_EGG = spawnEgg("boxfish", ReefEntities.BOXFISH);
     Item PARROTFISH_SPAWN_EGG = spawnEgg("parrotfish", ReefEntities.PARROTFISH);
-    Item DWARF_ANGEL_SPAWN_EGG = spawnEgg("dwarf_angel", ReefEntities.DWARF_ANGELFISH);
+    Item DWARF_ANGEL_SPAWN_EGG = spawnEgg("dwarf_angelfish", ReefEntities.DWARF_ANGELFISH);
     Item SMALL_SHARK_SPAWN_EGG = spawnEgg("small_shark", ReefEntities.SMALL_SHARK);
     Item CLOWNFISH_SPAWN_EGG = spawnEgg("clownfish", ReefEntities.CLOWNFISH);
     Item BASSLET_SPAWN_EGG = spawnEgg("basslet", ReefEntities.BASSLET);
-    Item BUTTERFISH_SPAWN_EGG = spawnEgg("butterfish", ReefEntities.BUTTERFISH);
+    Item BUTTERFISH_SPAWN_EGG = spawnEgg("butterfish", ReefEntities.BUTTERFLYFISH);
     Item HOGFISH_SPAWN_EGG = spawnEgg("hogfish", ReefEntities.HOGFISH);
     Item ANGELFISH_SPAWN_EGG = spawnEgg("angelfish", ReefEntities.ANGELFISH);
     Item CRAB_SPAWN_EGG = spawnEgg("crab", ReefEntities.CRAB);
@@ -62,7 +60,7 @@ public interface ReefItems {
     Item CLOWNFISH_BUCKET = bucket("clownfish", ReefEntities.CLOWNFISH);
     Item BOXFISH_BUCKET = bucket("boxfish", ReefEntities.BOXFISH);
     Item ARROW_CRAB_BUCKET = bucket("arrow_crab", ReefEntities.ARROW_CRAB);
-    Item BUTTERFISH_BUCKET = bucket("butterflyfish", ReefEntities.BUTTERFISH);
+    Item BUTTERFISH_BUCKET = bucket("butterflyfish", ReefEntities.BUTTERFLYFISH);
     Item SHARK_BUCKET = bucket("smallshark", ReefEntities.SMALL_SHARK);
     Item SEAHORSE_BUCKET = bucket("seahorse", ReefEntities.SEAHORSE);
     Item HOGFISH_BUCKET = bucket("hogfish", ReefEntities.HOGFISH);
@@ -72,11 +70,11 @@ public interface ReefItems {
     Item SPOTTED_EAGLE_RAY_BUCKET = bucket("spotted_eagle_ray", ReefEntities.RAY);
 
     // Raw
-    Item RAW_GOBY = rawFood("goby");
+    Item RAW_GOBY = rawFood("raw_goby");
     Item RAW_RAY = rawHeartyFood("raw_ray");
-    Item RAW_SMALL_SHARK = rawHeartyFood("small_shark");
-    Item RAW_ANGELFISH = rawFood("angelfish");
-    Item RAW_MOORISH_IDOL = rawFood("moorish_idol");
+    Item RAW_SMALL_SHARK = rawHeartyFood("raw_small_shark");
+    Item RAW_ANGELFISH = rawFood("raw_angelfish");
+    Item RAW_MOORISH_IDOL = rawFood("raw_moorish_idol");
     Item RAW_CRAB_MEAT = rawFood("crab_meat");
     Item RAW_ARROW_CRAB = rawFood("arrow_crab");
     Item RAW_TANG = rawFood("raw_tang");
@@ -186,7 +184,7 @@ public interface ReefItems {
     Item DEAD_BUSH_CORAL_FAN = deadCoralFan("bush", ReefBlocks.BUSH_SET);
 
     // Misc
-    Item MUSIC_DISC_CLAW = register("music_disc_claw", properties -> new Item(properties.stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(ReefJukeboxSongs.CRAB)));
+    Item MUSIC_DISC_CLAW = register("music_disc_claw", properties -> new Item(properties.stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(ReefJukeboxSongs.CLAW)));
     Item GLOB_OF_JELLY = register("glob_of_jelly", Item::new);
 
     static Item spawnEgg(String name, EntityType<? extends Mob> type) {
@@ -198,20 +196,20 @@ public interface ReefItems {
     }
 
     static Item coralFan(String name, CoralBlockSet set) {
-        return register(name + "_coral_fan", properties -> new StandingAndWallBlockItem(set.fan(), set.wallFan(), Direction.DOWN, properties));
+        return register(name + "_coral_fan", properties -> new StandingAndWallBlockItem(set.fan(), set.wallFan(), Direction.DOWN, properties.useBlockDescriptionPrefix()));
     }
 
     static Item deadCoralFan(String name, CoralBlockSet set) {
-        return register("dead_" + name + "_coral_fan", properties -> new StandingAndWallBlockItem(set.deadFan(), set.deadWallFan(), Direction.DOWN, properties));
+        return register("dead_" + name + "_coral_fan", properties -> new StandingAndWallBlockItem(set.deadFan(), set.deadWallFan(), Direction.DOWN, properties.useBlockDescriptionPrefix()));
     }
 
 
     static Item rawFood(String name) {
-        return register("raw_" + name, properties -> new Item(properties.food(food(1, 0.4F, false))));
+        return register(name, properties -> new Item(properties.food(food(1, 0.4F, false))));
     }
 
     static Item rawHeartyFood(String name) {
-        return register("raw_" + name, properties -> new Item(properties.food(food(1, 0.8F, false))));
+        return register(name, properties -> new Item(properties.food(food(1, 0.8F, false))));
     }
 
     static Item food(String name, int nutrition, float saturation, boolean alwaysEat) {

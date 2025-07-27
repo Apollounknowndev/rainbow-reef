@@ -1,0 +1,12 @@
+{
+  "type": "lithostitched:add_biome_spawns",
+  "biomes" : [
+    "minecraft:warm_ocean"
+  ],
+  "spawners" : {
+   "type" : "rainbowreef:angelfish",
+    "weight" : 15,
+    "minCount" : 1,
+    "maxCount" : 3
+  }
+}

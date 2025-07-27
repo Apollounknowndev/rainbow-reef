@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "__",
+    "__"
+  ],
+  "key": {
+    "_": "rainbowreef:coralstone"
+  },
+  "result": {
+    "id": "rainbowreef:polished_coralstone",
+    "count": 4
+  }
+}

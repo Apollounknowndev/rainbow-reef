@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -143,10 +144,6 @@ public abstract class AbstractCrab<V extends ReefVariant> extends DancingEntity 
         return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 2D).add(Attributes.MOVEMENT_SPEED, 0.2D).add(Attributes.ARMOR, 2.0D).build();
     }
 
-    public boolean canBreatheUnderwater() {
-        return true;
-    }
-
     @Override
     protected void registerGoals() {
         this.targetSelector.addGoal(0, new ConditionalStopGoal(this) {
@@ -200,6 +197,11 @@ public abstract class AbstractCrab<V extends ReefVariant> extends DancingEntity 
 
     }
 
+    @Override
+    protected void handleAirSupply(ServerLevel level, int air) {
+        this.setAirSupply(300);
+    }
+
     protected SoundEvent getAmbientSound() {
         return SoundEvents.TROPICAL_FISH_AMBIENT;
     }
@@ -208,11 +210,11 @@ public abstract class AbstractCrab<V extends ReefVariant> extends DancingEntity 
         return SoundEvents.TROPICAL_FISH_DEATH;
     }
 
-    protected SoundEvent getHurtSound(DamageSource p_28281_) {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.TROPICAL_FISH_HURT;
     }
 
     public static boolean canSpawn(EntityType<? extends AbstractCrab<?>> type, ServerLevelAccessor levelAccessor, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
-        return !levelAccessor.getBlockState(pos).isSolid();
+        return !levelAccessor.getBlockState(pos).isSolid() && levelAccessor.getBlockState(pos.below()).isSolid();
     }
 }

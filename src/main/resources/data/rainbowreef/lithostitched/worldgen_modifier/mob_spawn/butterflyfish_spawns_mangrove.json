@@ -1,0 +1,12 @@
+{
+  "type" :"lithostitched:add_biome_spawns",
+  "biomes" : [
+    "minecraft:mangrove_swamp"
+  ],
+  "spawners" : {
+    "type" : "rainbowreef:butterflyfish",
+    "weight" : 20,
+    "minCount" : 3,
+    "maxCount" : 5
+  }
+}

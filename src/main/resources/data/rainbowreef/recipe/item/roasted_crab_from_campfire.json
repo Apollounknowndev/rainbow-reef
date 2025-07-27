@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient":  "#rainbowreef:crab_items",
+  "result": {
+    "id": "rainbowreef:roasted_crab_meat"
+  },
+  "experience": 1,
+  "cookingtime": 600
+}

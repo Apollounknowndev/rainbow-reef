@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "rainbowreef:coralstone",
+  "result": {
+    "id": "rainbowreef:coralstone_bricks"
+  },
+  "count": 1
+}

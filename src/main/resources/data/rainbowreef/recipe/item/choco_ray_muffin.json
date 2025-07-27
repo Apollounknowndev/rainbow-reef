@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:sugar",
+    "minecraft:paper",
+    "minecraft:wheat",
+    "minecraft:cocoa_beans",
+    "minecraft:milk_bucket",
+    "minecraft:egg",
+    "rainbowreef:raw_ray"
+  ],
+  "result": {
+    "id": "rainbowreef:choco_ray_muffin"
+  }
+}

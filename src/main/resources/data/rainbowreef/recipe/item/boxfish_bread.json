@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "---",
+    "#+#",
+    "---"
+  ],
+  "key": {
+    "-": "minecraft:wheat",
+    "+": "rainbowreef:raw_boxfish",
+    "#": "minecraft:sugar"
+  },
+  "result": {
+    "id": "rainbowreef:boxfish_bread"
+  }
+}

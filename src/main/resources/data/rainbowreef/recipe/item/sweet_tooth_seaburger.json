@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "rainbowreef:cooked_hogfish_bacon",
+    "rainbowreef:basslet_cookie",
+    "rainbowreef:goby_gummy"
+  ],
+  "result": {
+    "id": "rainbowreef:sweet_tooth_seaburger"
+  }
+}

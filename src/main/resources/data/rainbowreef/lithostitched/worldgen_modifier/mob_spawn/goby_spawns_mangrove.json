@@ -1,0 +1,12 @@
+{
+  "type" :"lithostitched:add_biome_spawns",
+  "biomes" : [
+    "minecraft:mangrove_swamp"
+  ],
+  "spawners" : {
+    "type" : "rainbowreef:goby",
+    "weight" : 5,
+    "minCount" : 1,
+    "maxCount" : 3
+  }
+}

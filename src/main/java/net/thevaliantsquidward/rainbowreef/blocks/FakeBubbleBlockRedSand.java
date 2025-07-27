@@ -32,9 +32,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class FakeBubbleBlockRedSand extends Block implements BucketPickup {
-
-    private static final int CHECK_PERIOD = 5;
-
     public FakeBubbleBlockRedSand(BlockBehaviour.Properties pProperties) {
         super(pProperties); }
 
@@ -45,8 +42,8 @@ public class FakeBubbleBlockRedSand extends Block implements BucketPickup {
                 ServerLevel serverlevel = (ServerLevel)pLevel;
 
                 for(int i = 0; i < 2; ++i) {
-                    serverlevel.sendParticles(ParticleTypes.SPLASH, (double)pPos.getX() + pLevel.random.nextDouble(), (double)(pPos.getY() + 1), (double)pPos.getZ() + pLevel.random.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
-                    serverlevel.sendParticles(ParticleTypes.BUBBLE, (double)pPos.getX() + pLevel.random.nextDouble(), (double)(pPos.getY() + 1), (double)pPos.getZ() + pLevel.random.nextDouble(), 1, 0.0D, 0.01D, 0.0D, 0.2D);
+                    serverlevel.sendParticles(ParticleTypes.SPLASH, pPos.getX() + pLevel.random.nextDouble(), (pPos.getY() + 1), pPos.getZ() + pLevel.random.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
+                    serverlevel.sendParticles(ParticleTypes.BUBBLE, pPos.getX() + pLevel.random.nextDouble(), (pPos.getY() + 1), pPos.getZ() + pLevel.random.nextDouble(), 1, 0.0D, 0.01D, 0.0D, 0.2D);
                 }
             }
         }
